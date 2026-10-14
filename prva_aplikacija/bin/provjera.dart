@@ -13,4 +13,38 @@ void main() {
  print(teme[0]);
  print(oznake.length);
  print(bodovi['Mia'] ?? 0);
+
+ final zadaci = <Zadatak>[
+ const Zadatak(naslov: 'Instalacija', zavrsen: true),
+ const Zadatak(naslov: 'Git'),
+ const Zadatak(naslov: 'Dart'),
+ const Zadatak(naslov: 'Prvi commit', zavrsen: true),
+ ];
+ for (final z in zadaci) {
+ print('${z.naslov}: ${z.oznaka()}');
+ }
+ print('Otvorenih: ${brojOtvorenih(zadaci)}');
+ print(prikazNapomene(napomena));
+ print('Otvoreni zadaci: ${naslovi(zadaci)}');
+
+ print(prikazNapomene('Prvi samostalni rad'));
+ print(prikazNapomene(null));
 }
+
+class Zadatak {
+ final String naslov;
+ final bool zavrsen;
+ const Zadatak({required this.naslov, this.zavrsen = false});
+ String oznaka() => zavrsen ? 'Gotovo' : 'U tijeku';
+}
+
+int brojOtvorenih(List<Zadatak> zadaci) =>
+ zadaci.where((z) => !z.zavrsen).length;
+
+String prikazNapomene(String? napomena) => napomena ?? 'Bez napomene';
+
+List<String> naslovi(List<Zadatak> zadaci) =>
+    zadaci
+        .where((z) => !z.zavrsen)
+        .map((z) => z.naslov)
+        .toList();
