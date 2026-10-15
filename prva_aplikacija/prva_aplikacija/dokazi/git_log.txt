@@ -1,0 +1,7 @@
+draga@Dragan MINGW64 ~/Documents/GitHub/NRAMU/prva_aplikacija/prva_aplikacija (vjezba-01)
+$ git log --oneline -5
+59c27d0 (HEAD -> vjezba-01, origin/vjezba-01) Finalni commit
+7ed4ed6 Prvi zaslon i Dart primjer
+5de43fa Drugi dio zadatka odradjen
+549e6c0 Prvi dio zadatka odradjen
+4311725 (origin/main, origin/HEAD, main) Kreiran projekt prva_aplikacija
