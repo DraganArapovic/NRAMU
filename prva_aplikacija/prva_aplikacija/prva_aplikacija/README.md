@@ -1,7 +1,7 @@
-STUDENT: Dragan Arapović
-Flutter verzija: 3.47.7
-Dart verzija: 3.13.5
-OS: Windows 11 Home
+STUDENT: Dragan Arapović <br>
+Flutter verzija: 3.47.7<br>
+Dart verzija: 3.13.5<br>
+OS: Windows 11 Home<br>
 Korišteni uredjaj: ASUS Vivobook
 
 
