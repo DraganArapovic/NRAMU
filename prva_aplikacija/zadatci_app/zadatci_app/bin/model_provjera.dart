@@ -4,7 +4,7 @@ import 'package:zadatci_app/zadatak.dart';
 void main() {
  const tekst = '''
 [
- {"id": 1, "naslov": "Instalacija", "zavrsen": true},
+ {"id": 1, "naslov": "Instalacija", "zavrsen": true, "opis": "Instaliraj potrebne alate."},
  {"id": 2, "naslov": "Git"},
  {"id": 3, "naslov": "Dart", "zavrsen": false}
 ]''';
