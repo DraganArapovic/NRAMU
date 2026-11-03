@@ -1,9 +1,13 @@
 $ git log --oneline
-ba8d740 (HEAD -> vjezba-02, origin/vjezba-02) Final push
+b103a78 (HEAD -> vjezba-03, origin/vjezba-03) Provjere razumijevanja 1 i 2
+fe2aaca Tema, dodavanje zadatka i povratak na popis
+15de86a Forma s validacijom
+c05ba1f Dokazi za vjezbu 2
+ba8d740 Final push
 675adc9 Prikaz stanja i ListView
 67ebf81 Provjera razumijevanja 2
 2754983 Repozitorij s Future.delayed
 3f47cd2 Provjera razumijevanja 1
 14e9a32 Model Zadatak s fromJson
-4311725 (origin/main, origin/HEAD, main) Kreiran projekt prva_aplikacija
+4311725 Kreiran projekt prva_aplikacija
 a07d207 Initial commit
