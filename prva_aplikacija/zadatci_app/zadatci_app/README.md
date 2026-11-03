@@ -4,21 +4,16 @@ Dart verzija: 3.13.5
 OS: Windows 11 Home
 Korišteni uredjaj: ASUS Vivobook
 
-Provjera razumijevanja 1:
+Odgovorite u README: zašto je bolje zadati boju u temi nego na svakom widgetu?
+Odgovor: Zato sto na taj nacin zadajemo globalno za svaki widget kako ce izgledati, odnosno koje boje ce koristiti. Umjesto da ulazimo u svaki pojedinacni widget i rucno mijenjamo boju, ovako samo promijenimo boju na jednom mjestu za citavu aplikaciju.
 
-1. Polja modela su tipa final, što znaci da im se vrijednost moze dodijeliti samo jednom kod kreiranja objekta. Nakon toga vrijednosti se ne mogu direktno mijenjati. Zato je taj model nepromjenjiv.
 
-2. Ako polje naslov nedostaje dobit cemo gresku, jer naslov ne moze biti Null.
+Provjera razumijevanja 1: objasnite što radi validate() i zašto validator vraća null za ispravan unos
 
-Provjera razumijevanja 2:
+Odgovor: Validate() provjerava sva polja forme pomocu njihovih validator funkcija. Ako postoji neispravan unos, prikazuje poruku o gresci i vraca nam false, a ako su svi ispravni onda vraca true.
+Validator vraca Null ako je unos ispravan jer to znaci da nema greske.
 
-1. Ako iznimku iz Futurea ne uhvatimo onda cemo dobiti gresku.
+Provjera razumijevanja 2: objasnite zašto se nakon await Navigator.push provjerava mounted
 
-Provjer arazumijevanja 3:
-
-1. Future se stvara u polju kako se ne bi ponovno pokretao svaki put kada se izvrsi metoda build, sto bi uzrokovalo nepotrebno dohvacanje podataka.
-
-Tri stanja koja zaslon s podacima mora prikazati su:
-- Učitavanje – dok se podaci dohvaćaju.
-- Uspjeh – kada su podaci uspjesno dohvaceni.
-- Pogreska – kada dohvacanje podataka ne uspije.
+Odgovor: Mounted se provjerava kako bismo bili sigurni da je widget jos uvijek aktivan nakon await Navigator.push. 
+Ako je widget u medjuvremenu uklonjen onda ne smijemo koristiti njegov context ni pozivati setState() jer to moze uzrokovati gresku.
