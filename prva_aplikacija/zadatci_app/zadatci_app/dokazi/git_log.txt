@@ -1,5 +1,6 @@
 $ git log --oneline
-b103a78 (HEAD -> vjezba-03, origin/vjezba-03) Provjere razumijevanja 1 i 2
+f9b1f88 (HEAD -> vjezba-03) Dokazi za vjezbu 3
+b103a78 (origin/vjezba-03) Provjere razumijevanja 1 i 2
 fe2aaca Tema, dodavanje zadatka i povratak na popis
 15de86a Forma s validacijom
 c05ba1f Dokazi za vjezbu 2
