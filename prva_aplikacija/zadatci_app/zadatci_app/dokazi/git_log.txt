@@ -1,14 +1,16 @@
 $ git log --oneline
-f9b1f88 (HEAD -> vjezba-03) Dokazi za vjezbu 3
-b103a78 (origin/vjezba-03) Provjere razumijevanja 1 i 2
+20f22a1 (HEAD -> vjezba-04, origin/vjezba-04) Testovi za ViewModel
+8b28bc4 Statistika dijeli stanje
+64899ab Ekran popisa koristi ViewModel
+d97f790 ViewModel za zadatke
+a4b9000 (origin/vjezba-03, vjezba-03) Dodane fotografije dokaza za vjezbu 3
+d3ae0d3 Update git_log.txt
+f9b1f88 Dokazi za vjezbu 3
+b103a78 Provjere razumijevanja 1 i 2
 fe2aaca Tema, dodavanje zadatka i povratak na popis
 15de86a Forma s validacijom
 c05ba1f Dokazi za vjezbu 2
 ba8d740 Final push
 675adc9 Prikaz stanja i ListView
 67ebf81 Provjera razumijevanja 2
-2754983 Repozitorij s Future.delayed
-3f47cd2 Provjera razumijevanja 1
-14e9a32 Model Zadatak s fromJson
-4311725 Kreiran projekt prva_aplikacija
-a07d207 Initial commit
+:
