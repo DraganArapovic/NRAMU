@@ -1,14 +1,39 @@
+// ignore_for_file: unused_element, unused_field
+// (obrišite ovaj redak kad dovršite zadatke)
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'supabase_izvor.dart';
 import 'forma_ekran.dart';
-import 'repozitorij.dart';
+import 'memorijski_izvor.dart';
 import 'statistika_ekran.dart';
+import 'zadatci_izvor.dart';
 import 'zadatci_viewmodel.dart';
 
-void main() => runApp(const ZadatciApp());
+// Vrijednosti dolaze iz env.json: flutter run --dart-define-from-file=env.json
+const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+const _supabaseKljuc = String.fromEnvironment('SUPABASE_PUBLISHABLE_KEY');
+
+Future<void> main() async {
+ WidgetsFlutterBinding.ensureInitialized();
+ final ZadatciIzvor izvor;
+ if (_supabaseUrl.isEmpty || _supabaseKljuc.isEmpty) {
+ izvor = MemorijskiIzvor();
+ } else {
+ await Supabase.initialize(
+ url: _supabaseUrl,
+ publishableKey: _supabaseKljuc,
+ );
+ izvor = SupabaseIzvor(Supabase.instance.client);
+ }
+ runApp(ZadatciApp(izvor: izvor));
+}
+
 
 class ZadatciApp extends StatelessWidget {
-  const ZadatciApp({super.key});
+  final ZadatciIzvor izvor;
+
+  const ZadatciApp({super.key, required this.izvor});
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +44,22 @@ class ZadatciApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: const ZadatciEkran(),
+      home: ZadatciEkran(izvor: izvor),
     );
   }
 }
 
 class ZadatciEkran extends StatefulWidget {
-  const ZadatciEkran({super.key});
+  final ZadatciIzvor izvor;
+
+  const ZadatciEkran({super.key, required this.izvor});
 
   @override
   State<ZadatciEkran> createState() => _ZadatciEkranState();
 }
 
 class _ZadatciEkranState extends State<ZadatciEkran> {
-  final _vm = ZadatciViewModel(ZadatakRepozitorij());
+  late final _vm = ZadatciViewModel(widget.izvor);
 
   @override
   void initState() {
@@ -46,18 +73,31 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
     super.dispose();
   }
 
+  void _poruka(String tekst) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(tekst)));
+  }
+
   Future<void> _dodaj() async {
     final naslov = await Navigator.push<String>(
       context,
       MaterialPageRoute(builder: (_) => const FormaEkran()),
     );
-
     if (!mounted || naslov == null) return;
+    final uspjeh = await _vm.dodaj(naslov);
+    if (!mounted) return;
+    _poruka(uspjeh ? 'Dodano: $naslov' : _vm.poruka);
+  }
 
-    _vm.dodaj(naslov);
+  Future<void> _promijeni(int id) async {
+    final uspjeh = await _vm.promijeniZavrsen(id);
+    if (!mounted || uspjeh) return;
+    _poruka(_vm.poruka);
+  }
 
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Dodano: $naslov')));
+  Future<void> _obrisi(int id) async {
+    final uspjeh = await _vm.obrisi(id);
+    if (!mounted) return;
+    _poruka(uspjeh ? 'Obrisano' : _vm.poruka);
   }
 
   void _otvoriStatistiku() {
@@ -73,19 +113,6 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
       appBar: AppBar(
         title: const Text('Zadatci'),
         actions: [
-          ListenableBuilder(
-            listenable: _vm,
-            builder: (context, _) {
-              return Switch(
-                value: _vm.samoNezavrseni,
-                onChanged: (bool value) {
-                  setState(() {
-                    _vm.promijeniFilter(value);
-                  });
-                },
-              );
-            },
-          ),
           IconButton(
             onPressed: _otvoriStatistiku,
             tooltip: 'Statistika',
@@ -104,7 +131,6 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
           switch (_vm.stanje) {
             case Stanje.ucitavanje:
               return const Center(child: CircularProgressIndicator());
-
             case Stanje.greska:
               return Center(
                 child: Column(
@@ -125,34 +151,32 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
                   ],
                 ),
               );
-
             case Stanje.uspjeh:
-              if (_vm.prikazani.isEmpty) {
-                return const Center(child: Text('Nema zadataka za prikaz'));
+              if (_vm.zadatci.isEmpty) {
+                return const Center(child: Text('Nema zadataka'));
               }
-
               return ListView.builder(
-                itemCount: _vm.prikazani.length,
+                itemCount: _vm.zadatci.length,
                 itemBuilder: (context, i) {
-                  final z = _vm.prikazani[i];
-
-                  return Dismissible(
-                    key: ValueKey(z.id),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      _vm.ukloni(z.id);
-                    },
-                    child: CheckboxListTile(
+                  final z = _vm.zadatci[i];
+                  return ListTile(
+                    leading: Checkbox(
                       value: z.zavrsen,
-                      onChanged: (_) => _vm.promijeniZavrsen(z.id),
-                      title: Text(
-                        z.naslov,
-                        style: TextStyle(
-                          decoration: z.zavrsen
-                              ? TextDecoration.lineThrough
-                              : null,
-                        ),
+                      onChanged: (_) => _promijeni(z.id),
+                    ),
+                    title: Text(
+                      z.naslov,
+                      style: TextStyle(
+                        decoration: z.zavrsen
+                            ? TextDecoration.lineThrough
+                            : null,
                       ),
+                    ),
+                    trailing: IconButton(
+                      // TODO 4: pozovite _obrisi(z.id)
+                      onPressed: null,
+                      tooltip: 'Obriši',
+                      icon: const Icon(Icons.delete_outline),
                     ),
                   );
                 },
