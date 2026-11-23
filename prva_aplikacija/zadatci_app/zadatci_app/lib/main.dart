@@ -88,6 +88,30 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
     _poruka(uspjeh ? 'Dodano: $naslov' : _vm.poruka);
   }
 
+
+  Future<void> _uredi(int id, String stariNaslov) async {
+    final noviNaslov = await Navigator.push<String>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => FormaEkran(pocetniNaslov: stariNaslov),
+      ),
+    );
+
+    if (!mounted || noviNaslov == null) return;
+
+    // Ako korisnik nije promijenio naslov, ne radimo ništa.
+    if (noviNaslov == stariNaslov) return;
+
+    final uspjeh = await _vm.promijeniNaslov(id, noviNaslov);
+
+    if (!mounted) return;
+
+    _poruka(
+      uspjeh ? 'Naslov uspješno izmijenjen' : _vm.poruka,
+    );
+  }
+
+
   Future<void> _promijeni(int id) async {
     final uspjeh = await _vm.promijeniZavrsen(id);
     if (!mounted || uspjeh) return;
@@ -155,11 +179,15 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
               if (_vm.zadatci.isEmpty) {
                 return const Center(child: Text('Nema zadataka'));
               }
-              return ListView.builder(
-                itemCount: _vm.zadatci.length,
-                itemBuilder: (context, i) {
+              return RefreshIndicator(
+  onRefresh: _vm.ucitaj,
+  child: ListView.builder(
+    physics: const AlwaysScrollableScrollPhysics(),
+    itemCount: _vm.zadatci.length,
+    itemBuilder: (context, i) {
                   final z = _vm.zadatci[i];
                   return ListTile(
+                    onLongPress: () => _uredi(z.id, z.naslov),
                     leading: Checkbox(
                       value: z.zavrsen,
                       onChanged: (_) => _promijeni(z.id),
@@ -180,6 +208,7 @@ class _ZadatciEkranState extends State<ZadatciEkran> {
                     ),
                   );
                 },
+                ),
               );
           }
         },

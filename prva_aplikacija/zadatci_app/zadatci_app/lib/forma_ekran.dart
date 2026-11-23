@@ -1,7 +1,13 @@
+
 import 'package:flutter/material.dart';
 
 class FormaEkran extends StatefulWidget {
-  const FormaEkran({super.key});
+  final String? pocetniNaslov;
+
+  const FormaEkran({
+    super.key,
+    this.pocetniNaslov,
+  });
 
   @override
   State<FormaEkran> createState() => _FormaEkranState();
@@ -9,7 +15,17 @@ class FormaEkran extends StatefulWidget {
 
 class _FormaEkranState extends State<FormaEkran> {
   final _kljuc = GlobalKey<FormState>();
-  final _naslov = TextEditingController();
+  late final TextEditingController _naslov;
+
+  bool get _uredivanje => widget.pocetniNaslov != null;
+
+  @override
+  void initState() {
+    super.initState();
+    _naslov = TextEditingController(
+      text: widget.pocetniNaslov ?? '',
+    );
+  }
 
   @override
   void dispose() {
@@ -20,7 +36,9 @@ class _FormaEkranState extends State<FormaEkran> {
   String? _provjeriNaslov(String? vrijednost) {
     final tekst = vrijednost?.trim() ?? '';
     if (tekst.isEmpty) return 'Unesite naslov';
-    if (tekst.length < 3) return 'Naslov mora imati najmanje 3 znaka';
+    if (tekst.length < 3) {
+      return 'Naslov mora imati najmanje 3 znaka';
+    }
     return null;
   }
 
@@ -32,7 +50,11 @@ class _FormaEkranState extends State<FormaEkran> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Novi zadatak')),
+      appBar: AppBar(
+        title: Text(
+          _uredivanje ? 'Uredi zadatak' : 'Novi zadatak',
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -51,7 +73,10 @@ class _FormaEkranState extends State<FormaEkran> {
                 onFieldSubmitted: (_) => _spremi(),
               ),
               const SizedBox(height: 16),
-              FilledButton(onPressed: _spremi, child: const Text('Spremi')),
+              FilledButton(
+                onPressed: _spremi,
+                child: const Text('Spremi'),
+              ),
             ],
           ),
         ),

@@ -26,7 +26,7 @@ class SupabaseIzvor implements ZadatciIzvor {
   // Primjer za dohvati: _izvedi(() async { ... _db.from('zadatci').select() ... });
 @override
   Future<List<Zadatak>> dohvati() => _izvedi(() async {
- final redovi = await _db.from('zadatci').select().order('id');
+ final redovi = await _db.from('zadatci').select().order('kreirano', ascending: false);
  return redovi.map(Zadatak.fromJson).toList();
 });
 @override
@@ -58,4 +58,14 @@ Future<void> obrisi(int id) async {
         .eq('id', id);
   });
 }
+
+  @override
+  Future<void> promijeniNaslov(int id, String naslov) async {
+    await _izvedi(() async {
+      await _db
+          .from('zadatci')
+          .update({'naslov': naslov})
+          .eq('id', id);
+    });
+  }
 }
