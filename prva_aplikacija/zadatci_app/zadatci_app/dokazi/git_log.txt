@@ -1,5 +1,28 @@
 $ git log --oneline
-20f22a1 (HEAD -> vjezba-04, origin/vjezba-04) Testovi za ViewModel
+ca67d5f (HEAD -> vjezba-05) Dodane provjere razumijevanja u README
+6fef530 Dodane sve samostalne izmjene
+b527a6c (origin/vjezba-05) Brisanje i test pogreške izvora
+6b43ab5 Ispravka greski i dodane CRUD operacije
+1f78489 Postavljanje projekta, povezivanje sa supabaseom, rjesavanje problema, i jos miliun drugih stvari
+45c4c28 (origin/vjezba-04, vjezba-04) Dodane slike dokaza
+4fe3d52 Delete prva_aplikacija/zadatci_app/zadatci_app/dokazi/vjezba3_d2.png
+ac226ba Delete prva_aplikacija/zadatci_app/zadatci_app/dokazi/vjezba3_d1.png
+30d88dd promjene koda, dodani dokazi, i provjere znanja
+20f22a1 Testovi za ViewModel
+8b28bc4 Statistika dijeli stanje
+64899ab Ekran popisa koristi ViewModel
+d97f790 ViewModel za zadatke
+:...skipping...
+ca67d5f (HEAD -> vjezba-05) Dodane provjere razumijevanja u README
+6fef530 Dodane sve samostalne izmjene
+b527a6c (origin/vjezba-05) Brisanje i test pogreške izvora
+6b43ab5 Ispravka greski i dodane CRUD operacije
+1f78489 Postavljanje projekta, povezivanje sa supabaseom, rjesavanje problema, i jos miliun drugih stvari
+45c4c28 (origin/vjezba-04, vjezba-04) Dodane slike dokaza
+4fe3d52 Delete prva_aplikacija/zadatci_app/zadatci_app/dokazi/vjezba3_d2.png
+ac226ba Delete prva_aplikacija/zadatci_app/zadatci_app/dokazi/vjezba3_d1.png
+30d88dd promjene koda, dodani dokazi, i provjere znanja
+20f22a1 Testovi za ViewModel
 8b28bc4 Statistika dijeli stanje
 64899ab Ekran popisa koristi ViewModel
 d97f790 ViewModel za zadatke
@@ -13,4 +36,9 @@ c05ba1f Dokazi za vjezbu 2
 ba8d740 Final push
 675adc9 Prikaz stanja i ListView
 67ebf81 Provjera razumijevanja 2
-:
+2754983 Repozitorij s Future.delayed
+3f47cd2 Provjera razumijevanja 1
+14e9a32 Model Zadatak s fromJson
+4311725 Kreiran projekt prva_aplikacija
+a07d207 Initial commit
+(END)
